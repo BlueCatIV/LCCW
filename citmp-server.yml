@@ -17,7 +17,7 @@ AutoStartResources:
     - onscreentext
     - joinmessage
     - s-playerlist
-    - baseevents
+    - armymenu
 
 RconPassword: 123xyz
 
