@@ -1,6 +1,6 @@
 ## Liberty City Civil War
 
-Liberty City Civil War is a War/PvP/PvE CitizenIV [Link](https://citizeniv.net/) server.
+Liberty City Civil War is a War/PvP/PvE CitizenIV server.
 
 ```
 
