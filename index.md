@@ -6,3 +6,6 @@ Liberty City Civil War is a War/PvP/PvE CitizenIV server.
 
 Want to join our discord? You can do it here: https://discord.gg/4Y7CdQG9wh
 
+## Server Docs
+
+All custom scripts in /resources/[custom]
