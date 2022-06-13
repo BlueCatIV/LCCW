@@ -2,6 +2,10 @@
 
 Liberty City Civil War is a War/PvP/PvE CitizenIV server.
 
+## Direct Connect
+
+IP: 174.49.138.18:30121
+
 ## Discord
 
 Want to join our discord? You can do it here: discord.gg/4Y7CdQG9wh
