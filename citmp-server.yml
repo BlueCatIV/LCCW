@@ -1,0 +1,61 @@
+ListenPort: 30121
+
+PreParseResources:
+    - mapmanager
+
+AutoStartResources:
+    - sessionmanager
+    - spawnmanager
+    - mapmanager
+    - chat
+    - freeroam
+    - betaguns
+    - obituary
+    - obituary-deaths
+    - armyskin
+    - armycars
+    - onscreentext
+    - joinmessage
+    - s-playerlist
+
+RconPassword: 123xyz
+
+Hostname: Liberty City Civil War | War/PvP
+
+Game: GTA4
+
+ScriptDebug: true
+
+#server slots limit (must be between 1 and 32)
+MaxPlayers: 32
+
+#server language
+Language: English
+
+#enable/disable clientside mods (like trainer)
+ScriptHookAllowed: false
+
+#enable/disable modified game files check
+CheckGameFiles: true
+
+#server password
+#Password: changeme
+
+#branch stable/beta
+Branch: beta
+
+#server icon (needs to be a PNG)
+ServerIcon: icon.png
+
+#enable/disable server logs
+DebugLog: false
+
+# enjoy viiv
+#Imports:
+#    - ConfigURL: http://cache.lilycove.hacks.re/exports.json
+
+# the following is an example for resource download offloading
+#Downloads:
+#    all:
+#        BaseURL: http://cache.lilycove.hacks.re/
+#        UploadURL: ftp://citizen:city@localhost/
