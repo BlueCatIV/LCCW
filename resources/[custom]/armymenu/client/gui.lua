@@ -1,23 +1,31 @@
 GUI = {
-    
     optionText = { r = 255, g = 255, b = 255, a = 255 }
 }
 
 
 
 Menu = {
-
     isOpen = false,
-
-	-- Add submenus here.
     subs =
     {
-        ["MainMenu"] = 0,
-		["Credits"] = 1
+        ["main_menu"] = 0,
+        ["spawn_cars"] = 1,
+        ["cars"] = 2,
+        ["bikes"] = 3,
+        ["boats"] = 4,
+        ["aircraft"] = 5,
+        ["weapons"] = 6,
+        ["weathers"] = 7,
+        ["time"] = 8,
+		["option_cars"] = 9,
+		["neons"] = 10,
+        ["self"] = 11,
+        ["change_character"] = 12,
+		["playerlist"] = 13,
+		["playerListOptions"] = 14,
+		["credits"] = 20
     }
 }
-
-
 
 local safeZone = 0.02
 
@@ -57,7 +65,6 @@ local lastTick = 0
 
 
 local function Switch(_menu, _menuName)
-
 	menuNamesArray[menuLevel] = currentMenuName
 	menusArray[menuLevel] = currentMenu
 	optionsArray[menuLevel] = currentOption
@@ -72,7 +79,6 @@ end
 
 
 local function Back()
-
 	menuLevel = menuLevel - 1
 
 	currentMenuName = menuNamesArray[menuLevel]
@@ -83,21 +89,16 @@ end
 
 
 function GUI.Rect(_x, _y, _w, _h, _r, _g, _b, _a)
-
     DrawRect(_x + safeZone, _y + safeZone, _w, _h, _r, _g, _b, _a)
 end
 
 
 
 function GUI.Sprite(_textureDict, _textureName, _x, _y, _w, _h, _rotation, _r, _g, _b, _a)
-
 	if not HasStreamedTxdLoaded(_textureDict) then
-
 		RequestStreamedTxd(_textureDict, false)
-
 	else
         local texture = GetTextureFromStreamedTxd(_textureDict, _textureName)
-
 		DrawSprite(texture, _x + safeZone, _y + safeZone, _w, _h, _rotation, _r, _g, _b, _a)
 	end
 end
@@ -105,15 +106,11 @@ end
 
 
 function GUI.Text(_text, _x, _y, _scale, _fontId, _align, _color, _shadow)
-
     SetTextFont(_fontId)
 
     if _align == 1 then
-
         SetTextCentre(true)
-
     elseif _align == 2 then
-
         SetTextRightJustify(true)
         SetTextWrap(0.0, _x + safeZone)
     end
@@ -124,27 +121,19 @@ function GUI.Text(_text, _x, _y, _scale, _fontId, _align, _color, _shadow)
     SetTextColour(_color.r, _color.g, _color.b, _color.a)
 
     if _align == 2 then
-
         DisplayTextWithLiteralString(_x - _scale + safeZone, _y + safeZone, "STRING", _text)
     else
-
         DisplayTextWithLiteralString(_x + safeZone, _y + safeZone, "STRING", _text)
     end
 end
 
-
-
 function Menu.GetSub()
-
-    return currentMenu
+	return currentMenu
 end
 
-
-
 function Menu.Update()
-
 	-- Disable all game inputs.
-	SetPlayerControl(GetPlayerId(), false)
+	SetPlayerControl(GetPlayerId(), config.enableControl)
 
     -- Reset inputs state.
 	selectPressed = false
@@ -155,85 +144,46 @@ function Menu.Update()
 
 	-- Handle inputs.
 	if (GetGameTimer() - lastTick) > 100 then
-
-		-- Down
-		if IsGameKeyboardKeyPressed(208) or IsButtonPressed(0, 9) then
-
+		if IsGameKeyboardKeyPressed(208) or IsButtonPressed(0, 9) then --> Down
 			if currentOption < optionsCount then
-
 				currentOption = currentOption + 1
-
 			else
-
 				currentOption = 1
 			end
 
 			downPressed = true
-
 			PlaySoundFrontend(-1, "FRONTEND_MENU_HIGHLIGHT_DOWN_UP")
-
 			lastTick = GetGameTimer()
-
-		-- Up
-		elseif IsGameKeyboardKeyPressed(200) or IsButtonPressed(0, 8) then
-
+		elseif IsGameKeyboardKeyPressed(200) or IsButtonPressed(0, 8) then --> Up
 			if currentOption > 1 then
-
 				currentOption = currentOption - 1
 			else
-
 				currentOption = optionsCount
 			end
-
 			upPressed = true
-
             PlaySoundFrontend(-1, "FRONTEND_MENU_HIGHLIGHT_DOWN_UP")
-
 			lastTick = GetGameTimer()
-
-		-- Left
-		elseif IsGameKeyboardKeyPressed(203) or IsButtonPressed(0, 10) then
-
+		elseif IsGameKeyboardKeyPressed(203) or IsButtonPressed(0, 10) then --> Left
 			leftPressed = true
-
 			PlaySoundFrontend(-1, "FRONTEND_MENU_MP_SERVER_OPTION_CHANGE")
-
 			lastTick = GetGameTimer()
-
-		-- Right
-		elseif IsGameKeyboardKeyPressed(205) or IsButtonPressed(0, 11) then
-
+		elseif IsGameKeyboardKeyPressed(205) or IsButtonPressed(0, 11) then --> Right
 			rightPressed = true
-
 			PlaySoundFrontend(-1, "FRONTEND_MENU_MP_SERVER_OPTION_CHANGE")
-
 			lastTick = GetGameTimer()
 		end
 	end
-
-	-- Select
-	if IsGameKeyboardKeyJustPressed(28) or IsButtonJustPressed(0, 16) then
-
+	if IsGameKeyboardKeyJustPressed(28) or IsButtonJustPressed(0, 16) then --> Select
 		selectPressed = true
-
-		-- Play select sound.
         PlaySoundFrontend(-1, "FRONTEND_MENU_SELECT")
-
-	-- Back
-	elseif IsGameKeyboardKeyJustPressed(14) or IsButtonJustPressed(0, 17) then
-
-		if currentMenu > Menu.subs["MainMenu"] then
-
+	elseif IsGameKeyboardKeyJustPressed(14) or IsButtonJustPressed(0, 17) then --> Back
+		if currentMenu > Menu.subs["main_menu"] then
             PlaySoundFrontend(-1, "FRONTEND_MENU_BACK")
-
 			Back()
 		else
-
             PlaySoundFrontend(-1, "FRONTEND_MENU_BACK")
-
 			Menu.isOpen = false
 		end
-
         SetPlayerControl(GetPlayerId(), true)
 	end
 
@@ -276,41 +226,27 @@ end
 
 
 function Menu.Option(_text, _callback)
-
     optionsCount = optionsCount + 1
-
 	local thisOption = (currentOption == optionsCount)
-	
     local textColor = GUI.optionText
-
 	if thisOption then
-
 		textColor = { r = 0, g = 0, b = 0, a = 255 }
 	end
 
 	if (currentOption <= maxVisibleOptions and optionsCount <= maxVisibleOptions) then
-		
         GUI.Text(_text, menuPosition.x - (menuWidth / 2) + correctionX, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight) + correctionY, textSize, 0, 0, textColor, false)
-
 		if thisOption then
-			
             GUI.Sprite("commonmenu", "gradient_nav", menuPosition.x, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight), menuWidth, optionHeight, 0.0, 255, 255, 255, 255)
 		end
-
 	elseif (optionsCount > currentOption - maxVisibleOptions and optionsCount <= currentOption) then
-		
         GUI.Text(_text, menuPosition.x - (menuWidth / 2) + correctionX, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight) + correctionY, textSize, 0, 0, textColor, false)
-
 		if thisOption then
-			
             GUI.Sprite("commonmenu", "gradient_nav", menuPosition.x, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight), menuWidth, optionHeight, 0.0, 255, 255, 255, 255)
 		end
 	end
 
 	if thisOption then
-
 		if selectPressed then
-
 			_callback()
 		end
 	end
@@ -319,13 +255,9 @@ end
 
 
 function Menu.SubmenuOption(_text, _newMenu, _callback)
-
     Menu.Option(_text, function() end)
-
 	if (currentOption == optionsCount) and selectPressed then
-
         Switch(_newMenu, _text)
-
 		_callback()
 	end
 end
@@ -333,63 +265,39 @@ end
 
 
 function Menu.BooleanOption(_text, _boolean, _callback)
-
 	Menu.Option(_text, function() end)
-
 	local thisOption = (currentOption == optionsCount)
-
 	if (currentOption <= maxVisibleOptions and optionsCount <= maxVisibleOptions) then
-
 		if thisOption then
-
 			if _boolean then
-
 				GUI.Sprite("commonmenu", "shop_box_tickb", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
-			
             else
-
 				GUI.Sprite("commonmenu", "shop_box_blankb", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
 			end
-
 		else
-
 			if _boolean then
-				
                 GUI.Sprite("commonmenu", "shop_box_tick", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
-
 			else
-
 				GUI.Sprite("commonmenu", "shop_box_blank", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
 			end
 		end
-
 	elseif (optionsCount > currentOption - maxVisibleOptions and optionsCount <= currentOption) then
-
 		if thisOption then
-
 			if _boolean then
-
 				GUI.Sprite("commonmenu", "shop_box_tickb", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
-			
             else
-				
                 GUI.Sprite("commonmenu", "shop_box_blankb", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
 			end
 		else
-			
             if _boolean then
-				
                 GUI.Sprite("commonmenu", "shop_box_tick", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
-			
             else
-				
                 GUI.Sprite("commonmenu", "shop_box_blank", menuPosition.x + (menuWidth / 2) - correctionX - 0.007, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight), 0.028, 0.05, 0.0, 255, 255, 255, 255)
 			end
 		end
 	end
 
 	if thisOption and selectPressed then
-
         _callback(not _boolean)
 	end
 end
@@ -397,59 +305,42 @@ end
 
 
 function Menu.IntegerOption(_text, _integer, _min, _max, _callback)
-
 	Menu.Option(_text, function() end)
-
 	local thisOption = (currentOption == optionsCount)
-
 	local textColor = GUI.optionText
 
 	if thisOption then
-
 		textColor = { r = 0, g = 0, b = 0, a = 255 }
 	end
 
 	if (currentOption <= maxVisibleOptions and optionsCount <= maxVisibleOptions) then
-
 		GUI.Text(_integer.."", menuPosition.x + (menuWidth / 2) - correctionX, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight) + correctionY, textSize, 0, 2, textColor, false)
-
 	elseif (optionsCount > currentOption - maxVisibleOptions and optionsCount <= currentOption) then
-
 		GUI.Text(_integer.."", menuPosition.x + (menuWidth / 2) - correctionX, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight) + correctionY, textSize, 0, 2, textColor, false)
 	end
 
 	if thisOption then
-
 		if leftPressed then
-
 			if _integer > _min then
-
 				_integer = _integer - 1
-
 				if _integer < _min then
-
 					_integer = _min
 				end
 			end
-
-        	_callback(_integer)
-
+        
+		_callback(_integer)
+		
 		elseif rightPressed then
-
 			if _integer < _max then
-				
 				_integer = _integer + 1
-
 				if _integer > _max then
-
 					_integer = _max
 				end
 			end
-
-			_callback(_integer)
+			
+		_callback(_integer)
 
 		elseif selectPressed then
-
 			_callback(_integer)
 		end
 	end
@@ -458,37 +349,25 @@ end
 
 
 function Menu.FloatOption(_text, _float, _min, _max, _step, _callback)
-
 	Menu.Option(_text, function() end)
-
 	local thisOption = (currentOption == optionsCount)
-
 	local textColor = GUI.optionText
 
 	if thisOption then
-
 		textColor = { r = 0, g = 0, b = 0, a = 255 }
 	end
 
 	if (currentOption <= maxVisibleOptions and optionsCount <= maxVisibleOptions) then
-
 		GUI.Text(Utils.Round(_float, 1), menuPosition.x + (menuWidth / 2) - correctionX, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + (optionsCount * optionHeight) + correctionY, textSize, 0, 2, textColor, false)
-
 	elseif (optionsCount > currentOption - maxVisibleOptions and optionsCount <= currentOption) then
-
 		GUI.Text(Utils.Round(_float, 1), menuPosition.x + (menuWidth / 2) - correctionX, menuPosition.y + (headerHeight / 2) + (subtitleHeight / 2) + ((optionsCount - (currentOption - maxVisibleOptions)) * optionHeight) + correctionY, textSize, 0, 2, textColor, false)
 	end
 
 	if thisOption then
-
 		if leftPressed then
-
 			if _float > _min then
-
 				_float =  _float - _step
-
 				if _float < _min then
-
 					_float = _min
 				end
 			end
@@ -496,13 +375,9 @@ function Menu.FloatOption(_text, _float, _min, _max, _step, _callback)
         	_callback(_float)
 
 		elseif rightPressed then
-
 			if _float < _max then
-				
 				_float = _float + _step
-
 				if _float > _max then
-
 					_float = _max
 				end
 			end
@@ -510,7 +385,6 @@ function Menu.FloatOption(_text, _float, _min, _max, _step, _callback)
 			_callback(_float)
 
 		elseif selectPressed then
-
 			_callback(_float)
 		end
 	end
