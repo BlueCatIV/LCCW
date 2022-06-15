@@ -7,18 +7,13 @@ Citizen.CreateThread(function()
       local y = 0.16		
 
       local possave = table.pack(GetCharCoordinates(GetPlayerChar(-1)))	
-		
-			DrawCurvedWindow(0.32, 0.050, 0.32, 0.06, 255)
-      displaytext(0.33, 0.050, "X: " .. tostring(possave[1]), 255, 255, 255, 255) 
-			displaytext(0.33, 0.070, "Y: " .. tostring(possave[2]), 255, 255, 255, 255) 
-			displaytext(0.33, 0.090, "Z: " .. tostring(possave[3]), 255, 255, 255, 255) 
 			
       DrawCurvedWindow(0.32, 0.130, 0.32, 0.01, 255)
 			displaytext(0.33, 0.130, "Name", 255, 255, 255, 255)
 			displaytext(0.57, 0.130, "ID", 255, 255, 255, 255)
 			
       DrawCurvedWindow(0.32, 0.110, 0.32, 0.01, 255)
-			displaytext(0.33, 0.115, "Teleport: /tp [id] or [name]", 255, 255, 255, 255)
+			displaytext(0.33, 0.115, "Players (Enemys) Online:", 255, 255, 255, 255)
 			
       for _, player in ipairs(players) do
 			  local r, g, b = GetPlayerRgbColour(player)

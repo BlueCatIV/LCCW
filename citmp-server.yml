@@ -16,7 +16,7 @@ AutoStartResources:
     - armycars
     - onscreentext
     - joinmessage
-    - s-playerlist
+    - playerlist
     - armymenu
 
 RconPassword: 123xyz
