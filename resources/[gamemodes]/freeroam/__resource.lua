@@ -1,4 +1,4 @@
-resource_type 'gametype' { name = 'War-PvP-PvE' }
+resource_type 'gametype' { name = '' }
 
 description 'Gamemode from Dutchi.'
 
