@@ -4,7 +4,7 @@ CreateThread(function()
         displaytext(0.00, 0.98, "~W~Liberty City Civil War", 255, 191, 0, 255)
         displaytext(0.92, 0.98, "~W~Kills: TBD", 255, 191, 0, 255)
         displaytext(0.905, 0.00, "~B~By BlueCat", 255, 191, 0, 255)
-        displaytext(0.95, 0.0175, "~W~v1.0.2", 255, 191, 0, 255)
+        displaytext(0.95, 0.0175, "~W~v1.0.3", 255, 191, 0, 255)
     end
 end)
     

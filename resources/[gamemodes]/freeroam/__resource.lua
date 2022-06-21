@@ -1,4 +1,4 @@
-resource_type 'gametype' { name = '' }
+resource_type 'gametype' { name = 'War' }
 
 description 'Gamemode from Dutchi.'
 
