@@ -18,4 +18,4 @@ JoinMessage: Message from Army Commander when joining server
 
 OnScreenText: In-game text, displays info
 
-S-Playerlist: https://citizeniv.net/d/163-simplified-playerlist
+Playerlist: Shows players online
