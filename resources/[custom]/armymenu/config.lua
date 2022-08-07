@@ -6,7 +6,7 @@ config.localPlayer = 0
 config.player = {
     isGodMode = false,
     getActualCar = nil,
-    isNeverWantedOn = true,
+    isNeverWantedOn = false,
     isNoClipOn = false,
     noClipSpeed = 1.0
 }

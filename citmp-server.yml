@@ -1,4 +1,4 @@
-ListenPort: 30121
+ListenPort: 30120
 
 PreParseResources:
     - mapmanager
@@ -18,10 +18,13 @@ AutoStartResources:
     - joinmessage
     - playerlist
     - armymenu
+    - milpol_ped
+    - milpol_car
+    - milpol_ped2
 
 RconPassword: 123xyz
 
-Hostname: Liberty City Civil War v1.0.3 | War/PvP/PvE
+Hostname: Liberty City Civil War v1.0.4 | War/PvP/PvE
 
 Game: GTA4
 
@@ -49,7 +52,7 @@ Branch: beta
 ServerIcon: icon.png
 
 #enable/disable server logs
-DebugLog: false
+DebugLog: true
 
 # enjoy viiv
 #Imports:
